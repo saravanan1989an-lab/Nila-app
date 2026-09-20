@@ -193,15 +193,25 @@
 
   <header>
     <div class="title">Nila</div>
+
     <div class="subtitle" id="tagline">
       உங்கள் AI மொபைல் உதவியாளர்
     </div>
 
     <div class="toolbar">
       <button onclick="setLang('ta')">தமிழ்</button>
+
       <button onclick="setLang('en')">English</button>
+
       <button onclick="startVoice()">🎤 Voice</button>
-      <button onclick="installPromptHandler()">⬇ Install</button>
+
+      <button id="voiceReplyBtn" onclick="toggleVoiceReply()">
+        🔊 Reply ON
+      </button>
+
+      <button onclick="installPromptHandler()">
+        ⬇ Install
+      </button>
 
       <label class="file-label">
         📷 Photo
@@ -237,7 +247,6 @@
       style="display:none;"
     >
       <div
-        id="photoTitle"
         style="font-weight:700;margin-bottom:10px;"
       >
         Upload செய்த படம்
@@ -248,13 +257,6 @@
         class="preview"
         alt="Uploaded image"
       >
-
-      <div
-        class="muted"
-        style="margin-top:10px;"
-      >
-        Image AI analysis அடுத்த version-ல் சேர்க்கலாம்.
-      </div>
     </div>
 
 
@@ -278,7 +280,6 @@
       </div>
 
       <div
-        id="helpText"
         class="muted"
         style="margin-top:8px;"
       >
@@ -300,7 +301,11 @@
 <script>
 
 let lang = 'ta';
+
 let deferredPrompt = null;
+
+let voiceReplyEnabled = true;
+
 
 const API_URL =
   'https://nila-v2-backend.vercel.app/api/chat';
@@ -309,31 +314,54 @@ const API_URL =
 const texts = {
 
   ta: {
-    tagline: 'உங்கள் AI மொபைல் உதவியாளர்',
-    placeholder: 'Nila-விடம் ஏதேனும் கேளுங்கள்...',
-    send: 'Send',
-    empty: 'ஒரு கேள்வியை type செய்யுங்கள்.',
+    tagline:
+      'உங்கள் AI மொபைல் உதவியாளர்',
+
+    placeholder:
+      'Nila-விடம் ஏதேனும் கேளுங்கள்...',
+
+    send:
+      'Send',
+
+    empty:
+      'ஒரு கேள்வியை type செய்யுங்கள்.',
+
     welcome:
-      'வணக்கம்! நான் Nila. 😊\n\nஉங்களுக்கு என்ன உதவி வேண்டும்?',
+      'வணக்கம்! நான் Nila. 😊\\n\\nஉங்களுக்கு என்ன உதவி வேண்டும்?',
+
     connecting:
       'AI connection error: ',
+
     speechUnsupported:
       'இந்த browser-ல் voice input support இல்லை.',
+
     installLater:
       'Install option இன்னும் browser-ல் available இல்லை. Chrome menu-ல் Add to Home Screen பயன்படுத்தலாம்.'
   },
 
+
   en: {
-    tagline: 'Your AI mobile assistant',
-    placeholder: 'Ask Nila anything...',
-    send: 'Send',
-    empty: 'Please type a message.',
+    tagline:
+      'Your AI mobile assistant',
+
+    placeholder:
+      'Ask Nila anything...',
+
+    send:
+      'Send',
+
+    empty:
+      'Please type a message.',
+
     welcome:
-      'Hello! I am Nila. 😊\n\nHow can I help you?',
+      'Hello! I am Nila. 😊\\n\\nHow can I help you?',
+
     connecting:
       'AI connection error: ',
+
     speechUnsupported:
       'Voice input is not supported in this browser.',
+
     installLater:
       'Install is not available yet. You can use Add to Home Screen from the Chrome menu.'
   }
@@ -343,11 +371,14 @@ const texts = {
 
 function addMessage(text, who = 'bot') {
 
-  const msg = document.createElement('div');
+  const msg =
+    document.createElement('div');
 
-  msg.className = `msg ${who}`;
+  msg.className =
+    `msg ${who}`;
 
-  msg.textContent = text;
+  msg.textContent =
+    text;
 
   document
     .getElementById('chat')
@@ -363,22 +394,36 @@ function addMessage(text, who = 'bot') {
 
 function setLang(newLang) {
 
-  lang = newLang;
+  lang =
+    newLang;
 
-  const t = texts[lang];
+  const t =
+    texts[lang];
 
-  document.getElementById('tagline').textContent =
+  document
+    .getElementById('tagline')
+    .textContent =
     t.tagline;
 
-  document.getElementById('prompt').placeholder =
+  document
+    .getElementById('prompt')
+    .placeholder =
     t.placeholder;
 
-  document.getElementById('sendBtn').textContent =
+  document
+    .getElementById('sendBtn')
+    .textContent =
     t.send;
 
-  document.getElementById('chat').innerHTML = '';
+  document
+    .getElementById('chat')
+    .innerHTML =
+    '';
 
-  addMessage(t.welcome, 'bot');
+  addMessage(
+    t.welcome,
+    'bot'
+  );
 
 }
 
@@ -394,43 +439,57 @@ async function sendMessage() {
 
   if (!text) {
 
-    alert(texts[lang].empty);
+    alert(
+      texts[lang].empty
+    );
 
     return;
 
   }
 
 
-  addMessage(text, 'user');
+  addMessage(
+    text,
+    'user'
+  );
 
-  box.value = '';
+  box.value =
+    '';
 
 
   const btn =
     document.getElementById('sendBtn');
 
-  btn.disabled = true;
+  btn.disabled =
+    true;
 
-  btn.textContent = '...';
+  btn.textContent =
+    '...';
 
 
   try {
 
     const response =
-      await fetch(API_URL, {
+      await fetch(
+        API_URL,
+        {
 
-        method: 'POST',
+          method:
+            'POST',
 
-        headers: {
-          'Content-Type': 'application/json'
-        },
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
 
-        body: JSON.stringify({
-          message: text,
-          language: lang
-        })
+          body:
+            JSON.stringify({
+              message: text,
+              language: lang
+            })
 
-      });
+        }
+      );
 
 
     const data =
@@ -440,16 +499,26 @@ async function sendMessage() {
     if (!response.ok) {
 
       throw new Error(
-        data.error || 'Request failed'
+        data.error ||
+        'Request failed'
       );
 
     }
 
 
-    addMessage(
+    const replyText =
       data.reply ||
-      'No response returned.',
+      'No response returned.';
+
+
+    addMessage(
+      replyText,
       'bot'
+    );
+
+
+    speakReply(
+      replyText
     );
 
 
@@ -463,7 +532,8 @@ async function sendMessage() {
 
   } finally {
 
-    btn.disabled = false;
+    btn.disabled =
+      false;
 
     btn.textContent =
       texts[lang].send;
@@ -473,26 +543,151 @@ async function sendMessage() {
 }
 
 
+function toggleVoiceReply() {
+
+  voiceReplyEnabled =
+    !voiceReplyEnabled;
+
+
+  const btn =
+    document.getElementById(
+      'voiceReplyBtn'
+    );
+
+
+  btn.textContent =
+    voiceReplyEnabled
+      ? '🔊 Reply ON'
+      : '🔇 Reply OFF';
+
+
+  if (
+    !voiceReplyEnabled &&
+    'speechSynthesis' in window
+  ) {
+
+    window
+      .speechSynthesis
+      .cancel();
+
+  }
+
+}
+
+
+function speakReply(text) {
+
+  if (!voiceReplyEnabled) {
+    return;
+  }
+
+
+  if (
+    !('speechSynthesis' in window)
+  ) {
+    return;
+  }
+
+
+  window
+    .speechSynthesis
+    .cancel();
+
+
+  const utterance =
+    new SpeechSynthesisUtterance(
+      text
+    );
+
+
+  utterance.lang =
+    lang === 'ta'
+      ? 'ta-IN'
+      : 'en-IN';
+
+
+  utterance.rate =
+    1;
+
+
+  utterance.pitch =
+    1;
+
+
+  const voices =
+    window
+      .speechSynthesis
+      .getVoices();
+
+
+  const preferred =
+    voices.find(
+      function(v) {
+
+        const voiceLang =
+          v.lang
+            .toLowerCase();
+
+        if (lang === 'ta') {
+
+          return voiceLang
+            .startsWith('ta');
+
+        }
+
+        return voiceLang
+          .startsWith('en-in');
+
+      }
+    );
+
+
+  if (preferred) {
+
+    utterance.voice =
+      preferred;
+
+  }
+
+
+  window
+    .speechSynthesis
+    .speak(
+      utterance
+    );
+
+}
+
+
 function handleImage(event) {
 
   const file =
     event.target.files[0];
 
-  if (!file) return;
+  if (!file) {
+    return;
+  }
 
 
   const imageCard =
-    document.getElementById('imageCard');
+    document.getElementById(
+      'imageCard'
+    );
 
   const preview =
-    document.getElementById('preview');
+    document.getElementById(
+      'preview'
+    );
 
 
   imageCard.style.display =
     'block';
 
+
   preview.src =
-    URL.createObjectURL(file);
+    URL.createObjectURL(
+      file
+    );
 
 
   addMessage(
@@ -515,7 +710,8 @@ function startVoice() {
   if (!SR) {
 
     alert(
-      texts[lang].speechUnsupported
+      texts[lang]
+        .speechUnsupported
     );
 
     return;
@@ -545,9 +741,12 @@ function startVoice() {
     function(event) {
 
       document
-        .getElementById('prompt')
+        .getElementById(
+          'prompt'
+        )
         .value =
-        event.results[0][0]
+        event
+          .results[0][0]
           .transcript;
 
     };
@@ -576,7 +775,8 @@ async function installPromptHandler() {
   if (!deferredPrompt) {
 
     alert(
-      texts[lang].installLater
+      texts[lang]
+        .installLater
     );
 
     return;
@@ -586,9 +786,13 @@ async function installPromptHandler() {
 
   deferredPrompt.prompt();
 
-  await deferredPrompt.userChoice;
 
-  deferredPrompt = null;
+  await deferredPrompt
+    .userChoice;
+
+
+  deferredPrompt =
+    null;
 
 }
 
@@ -600,7 +804,8 @@ document
     function(event) {
 
       if (
-        event.key === 'Enter' &&
+        event.key ===
+          'Enter' &&
         !event.shiftKey
       ) {
 
@@ -614,15 +819,20 @@ document
   );
 
 
-if ('serviceWorker' in navigator) {
+if (
+  'serviceWorker' in navigator
+) {
 
   window.addEventListener(
     'load',
     function() {
 
-      navigator.serviceWorker
+      navigator
+        .serviceWorker
         .register('./sw.js')
-        .catch(function() {});
+        .catch(
+          function() {}
+        );
 
     }
   );
