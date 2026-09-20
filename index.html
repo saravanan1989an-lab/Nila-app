@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nila Assistant</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#6d5efc" />
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --primary:#6d5efc;
+      --primary2:#8a7fff;
+      --border:#e5e7eb;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    .app{
+      max-width:720px;
+      margin:0 auto;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+    header{
+      position:sticky;
+      top:0;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      color:white;
+      padding:16px;
+      z-index:5;
+      box-shadow:0 4px 14px rgba(0,0,0,.08);
+    }
+    .title{font-size:22px;font-weight:700}
+    .subtitle{font-size:13px;opacity:.92;margin-top:4px}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    button, .file-label{
+      border:none;
+      border-radius:14px;
+      padding:10px 14px;
+      font-size:14px;
+      cursor:pointer;
+      background:white;
+      color:var(--primary);
+      font-weight:600;
+    }
+    .file-label input{display:none}
+    .container{padding:14px;display:flex;flex-direction:column;gap:12px;flex:1}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:14px;
+      box-shadow:0 4px 14px rgba(16,24,40,.04);
+    }
+    .badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#ede9fe;color:#5b4de8;font-size:12px;font-weight:700}
+    #chat{display:flex;flex-direction:column;gap:12px;min-height:280px}
+    .msg{max-width:86%;padding:12px 14px;border-radius:16px;line-height:1.4;white-space:pre-wrap}
+    .user{align-self:flex-end;background:#e9edff}
+    .bot{align-self:flex-start;background:#f3f4f6}
+    .row{display:flex;gap:10px;align-items:flex-end}
+    textarea{
+      width:100%;
+      min-height:54px;
+      max-height:140px;
+      resize:vertical;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px;
+      font-size:15px;
+      font-family:inherit;
+      background:white;
+    }
+    .send{
+      background:var(--primary);
+      color:white;
+      min-width:84px;
+    }
+    .muted{color:var(--muted);font-size:13px}
+    img.preview{width:100%;max-height:280px;object-fit:contain;border-radius:14px;border:1px solid var(--border);background:#fafafa}
+    footer{padding:10px 16px 24px;color:var(--muted);font-size:12px;text-align:center}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="title">Nila</div>
+    <div class="subtitle" id="tagline">Your mobile assistant • Demo PWA version</div>
+    <div class="toolbar">
+      <button onclick="setLang('ta')">தமிழ்</button>
+      <button onclick="setLang('en')">English</button>
+      <button onclick="startVoice()">🎤 Voice</button>
+      <button onclick="installPromptHandler()">⬇ Install</button>
+      <label class="file-label">📷 Photo
+        <input type="file" accept="image/*" onchange="handleImage(event)" />
+      </label>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <span class="badge" id="modeBadge">Demo Mode</span>
+      <div class="muted" id="modeText" style="margin-top:8px;">This starter version works on mobile and shows the UI flow. Later, a secure backend can be connected for full AI replies.</div>
+    </div>
+
+    <div class="card">
+      <div id="chat"></div>
+    </div>
+
+    <div class="card" id="imageCard" style="display:none;">
+      <div style="font-weight:700;margin-bottom:10px;" id="photoTitle">Uploaded photo</div>
+      <img id="preview" class="preview" alt="preview" />
+      <div class="muted" id="photoNote" style="margin-top:10px;">In the full version, Nila can explain this image or use it in a workflow.</div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <textarea id="prompt" placeholder="Ask Nila anything..."></textarea>
+        <button class="send" onclick="sendMessage()" id="sendBtn">Send</button>
+      </div>
+      <div class="muted" id="sampleHelp" style="margin-top:8px;">Try: "Explain tyre wear in Tamil" or "Write a loving message"</div>
+    </div>
+  </div>
+
+  <footer>
+    Nila V1 Starter PWA • Mobile-friendly • Offline shell enabled
+  </footer>
+</div>
+
+<script>
+  let lang = 'ta';
+  let deferredPrompt = null;
+
+  const texts = {
+    ta: {
+      tagline: 'உங்கள் மொபைல் உதவியாளர் • Demo PWA version',
+      mode: 'Demo Mode',
+      modeText: 'இந்த starter version mobile-ல் வேலை செய்யும் UI demo. பிறகு secure backend இணைத்தால் full AI replies கிடைக்கும்.',
+      photoTitle: 'Upload செய்த படம்',
+      photoNote: 'Full version-ல், Nila இந்த படத்தை விளக்கவும் அல்லது workflow-ல் பயன்படுத்தவும் முடியும்.',
+      placeholder: 'Nila-விடம் ஏதேனும் கேளுங்கள்...',
+      send: 'Send',
+      sample: 'உதாரணம்: "Tyre wear-ஐ தமிழில் explain பண்ணு" அல்லது "Love message எழுது"',
+      welcome: 'வணக்கம்! நான் Nila. இது mobile-only starter app.\n\nநான் இப்போது demo replies தருகிறேன். பிறகு full AI backend connect செய்யலாம்.',
+      uploaded: 'படம் upload ஆனது. Full version-ல் image explanation சேர்க்கலாம்.',
+      speechUnsupported: 'இந்த browser-ல் voice input support இல்லை.',
+      empty: 'கேள்வி type செய்யுங்கள்.',
+      installLater: 'இந்த browser இன்னும் install prompt தரவில்லை. Chrome-ல் open செய்து Add to Home Screen பயன்படுத்தலாம்.'
+    },
+    en: {
+      tagline: 'Your mobile assistant • Demo PWA version',
+      mode: 'Demo Mode',
+      modeText: 'This starter version works on mobile and shows the UI flow. Later, a secure backend can be connected for full AI replies.',
+      photoTitle: 'Uploaded photo',
+      photoNote: 'In the full version, Nila can explain this image or use it in a workflow.',
+      placeholder: 'Ask Nila anything...',
+      send: 'Send',
+      sample: 'Try: "Explain tyre wear in Tamil" or "Write a loving message"',
+      welcome: 'Hello! I am Nila. This is a mobile-only starter app.\n\nRight now I give demo replies. Later, a full AI backend can be connected.',
+      uploaded: 'Photo uploaded. In the full version, image explanation can be added.',
+      speechUnsupported: 'Voice input is not supported in this browser.',
+      empty: 'Please type a message.',
+      installLater: 'This browser has not offered the install prompt yet. Open in Chrome and use Add to Home Screen.'
+    }
+  };
+
+  function addMessage(text, who='bot'){
+    const msg = document.createElement('div');
+    msg.className = `msg ${who}`;
+    msg.textContent = text;
+    document.getElementById('chat').appendChild(msg);
+    msg.scrollIntoView({behavior:'smooth', block:'end'});
+  }
+
+  function setLang(newLang){
+    lang = newLang;
+    const t = texts[lang];
+    document.getElementById('tagline').textContent = t.tagline;
+    document.getElementById('modeBadge').textContent = t.mode;
+    document.getElementById('modeText').textContent = t.modeText;
+    document.getElementById('photoTitle').textContent = t.photoTitle;
+    document.getElementById('photoNote').textContent = t.photoNote;
+    document.getElementById('prompt').placeholder = t.placeholder;
+    document.getElementById('sendBtn').textContent = t.send;
+    document.getElementById('sampleHelp').textContent = t.sample;
+    document.getElementById('chat').innerHTML = '';
+    addMessage(t.welcome, 'bot');
+  }
+
+  function demoReply(input){
+    const q = input.toLowerCase();
+    if (q.includes('tyre') || q.includes('tire')) {
+      return lang === 'ta'
+        ? 'Tyre wear பல காரணங்களால் வரும்: air pressure குறைவு/அதிகம், wheel alignment தவறு, suspension issue, overloading, driving style. Full version-ல் இதை table-ஆகவும் கொடுக்கலாம்.'
+        : 'Tyre wear can happen due to low/high air pressure, wrong wheel alignment, suspension issues, overloading, and driving style. In the full version, this can be shown as a table too.';
+    }
+    if (q.includes('love') || q.includes('romance') || q.includes('message')) {
+      return lang === 'ta'
+        ? 'உனக்கு அருகில் இருக்கும்போது மனசுக்கு அமைதி கிடைக்கிறது. உன் சிரிப்பே என் நாளை அழகாக்குது.'
+        : 'When I am near you, my heart feels calm. Your smile makes my day beautiful.';
+    }
+    if (q.includes('cnc') || q.includes('g-code') || q.includes('g code')) {
+      return lang === 'ta'
+        ? 'CNC உதவிக்கு: machine model, controller type, material, tool size கொடுத்தால் G-code structure, feed, speed, and setup checklist சொல்லலாம்.'
+        : 'For CNC help, give the machine model, controller type, material, and tool size. Then Nila can suggest G-code structure, feed, speed, and setup checklist.';
+    }
+    return lang === 'ta'
+      ? 'நான் demo mode-ல் இருக்கிறேன். Full version-ல் AI backend இணைத்தால் விரிவாக பதில் தருவேன்.'
+      : 'I am in demo mode. In the full version, I can answer in detail once an AI backend is connected.';
+  }
+
+  function sendMessage(){
+    const box = document.getElementById('prompt');
+    const text = box.value.trim();
+    if(!text){ alert(texts[lang].empty); return; }
+    addMessage(text, 'user');
+    box.value = '';
+    setTimeout(() => addMessage(demoReply(text), 'bot'), 400);
+  }
+
+  function handleImage(event){
+    const file = event.target.files[0];
+    if(!file) return;
+    document.getElementById('imageCard').style.display = 'block';
+    const url = URL.createObjectURL(file);
+    document.getElementById('preview').src = url;
+    addMessage(texts[lang].uploaded, 'bot');
+  }
+
+  function startVoice(){
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR){ alert(texts[lang].speechUnsupported); return; }
+    const rec = new SR();
+    rec.lang = lang === 'ta' ? 'ta-IN' : 'en-IN';
+    rec.interimResults = false;
+    rec.maxAlternatives = 1;
+    rec.onresult = (e) => {
+      document.getElementById('prompt').value = e.results[0][0].transcript;
+    };
+    rec.start();
+  }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  async function installPromptHandler(){
+    if(!deferredPrompt){ alert(texts[lang].installLater); return; }
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  }
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+  }
+
+  setLang('ta');
+</script>
+</body>
+</html>
