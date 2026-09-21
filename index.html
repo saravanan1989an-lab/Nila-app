@@ -2,91 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Nila AI Assistant</title>
-
   <link rel="manifest" href="manifest.json">
-
-  <meta
-    name="theme-color"
-    content="#6d5efc"
-  >
+  <meta name="theme-color" content="#6d5efc">
 
   <style>
     :root {
-      --bg: #f5f7fb;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --primary: #6d5efc;
-      --primary2: #8a7fff;
-      --border: #e5e7eb;
-      --soft: #f3f4f6;
-      --user: #e9edff;
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --primary:#6d5efc;
+      --primary2:#8a7fff;
+      --border:#e5e7eb;
+      --soft:#f3f4f6;
+      --user:#e9edff;
     }
 
     * {
-      box-sizing: border-box;
+      box-sizing:border-box;
     }
 
     body {
-      margin: 0;
-      font-family:
-        system-ui,
-        -apple-system,
-        Segoe UI,
-        Roboto,
-        Arial,
-        sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
     }
 
     .app {
-      max-width: 760px;
-      margin: 0 auto;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      max-width:760px;
+      margin:0 auto;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
     }
 
     header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      padding: 18px;
-      color: white;
-      background:
-        linear-gradient(
-          135deg,
-          var(--primary),
-          var(--primary2)
-        );
-      box-shadow:
-        0 4px 14px rgba(0,0,0,.08);
+      position:sticky;
+      top:0;
+      z-index:20;
+      padding:18px;
+      color:white;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      box-shadow:0 4px 14px rgba(0,0,0,.08);
     }
 
     .title {
-      font-size: 28px;
-      font-weight: 800;
+      font-size:28px;
+      font-weight:800;
     }
 
     .subtitle {
-      margin-top: 4px;
-      opacity: .95;
-      font-size: 15px;
+      margin-top:4px;
+      opacity:.95;
+      font-size:15px;
     }
 
     .toolbar {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
-      margin-top: 15px;
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
+      margin-top:15px;
     }
 
     button,
@@ -94,208 +73,191 @@
     input,
     textarea,
     .file-label {
-      font-family: inherit;
+      font-family:inherit;
     }
 
     button,
     .file-label {
-      border: 0;
-      border-radius: 15px;
-      padding: 11px 15px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
+      border:0;
+      border-radius:15px;
+      padding:11px 15px;
+      font-size:14px;
+      font-weight:700;
+      cursor:pointer;
     }
 
     header button,
     header .file-label {
-      background: white;
-      color: var(--primary);
+      background:white;
+      color:var(--primary);
     }
 
     .file-label input {
-      display: none;
+      display:none;
     }
 
     .container {
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-      flex: 1;
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:13px;
+      flex:1;
     }
 
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 15px;
-      box-shadow:
-        0 4px 14px rgba(16,24,40,.04);
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:15px;
+      box-shadow:0 4px 14px rgba(16,24,40,.04);
     }
 
     .badge {
-      display: inline-block;
-      padding: 6px 11px;
-      border-radius: 999px;
-      background: #ede9fe;
-      color: #5b4de8;
-      font-size: 12px;
-      font-weight: 800;
+      display:inline-block;
+      padding:6px 11px;
+      border-radius:999px;
+      background:#ede9fe;
+      color:#5b4de8;
+      font-size:12px;
+      font-weight:800;
     }
 
     .muted {
-      color: var(--muted);
-      font-size: 13px;
+      color:var(--muted);
+      font-size:13px;
     }
 
     #chat {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      min-height: 260px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-height:260px;
     }
 
     .msg {
-      max-width: 88%;
-      padding: 13px 15px;
-      border-radius: 17px;
-      line-height: 1.48;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
+      max-width:88%;
+      padding:13px 15px;
+      border-radius:17px;
+      line-height:1.48;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
     }
 
     .user {
-      align-self: flex-end;
-      background: var(--user);
+      align-self:flex-end;
+      background:var(--user);
     }
 
     .bot {
-      align-self: flex-start;
-      background: var(--soft);
+      align-self:flex-start;
+      background:var(--soft);
     }
 
     .row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
+      display:flex;
+      gap:10px;
+      align-items:flex-end;
     }
 
     textarea {
-      width: 100%;
-      min-height: 58px;
-      max-height: 170px;
-      resize: vertical;
-      border:
-        1px solid var(--border);
-      border-radius: 17px;
-      padding: 13px;
-      font-size: 16px;
-      background: white;
-      color: var(--text);
+      width:100%;
+      min-height:58px;
+      max-height:170px;
+      resize:vertical;
+      border:1px solid var(--border);
+      border-radius:17px;
+      padding:13px;
+      font-size:16px;
+      background:white;
+      color:var(--text);
     }
 
     .send {
-      min-width: 88px;
-      background: var(--primary);
-      color: white;
+      min-width:88px;
+      background:var(--primary);
+      color:white;
     }
 
     .send:disabled {
-      opacity: .55;
+      opacity:.55;
     }
 
     .section-title {
-      font-size: 18px;
-      font-weight: 800;
-      margin-bottom: 12px;
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:12px;
     }
 
     .photo-preview {
-      width: 100%;
-      max-height: 380px;
-      object-fit: contain;
-      border-radius: 16px;
-      border:
-        1px solid var(--border);
-      background: #fafafa;
+      width:100%;
+      max-height:380px;
+      object-fit:contain;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:#fafafa;
     }
 
     .grid {
-      display: grid;
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
     }
 
     .field {
-      width: 100%;
-      border:
-        1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px;
-      font-size: 15px;
-      background: white;
-      color: var(--text);
+      width:100%;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px;
+      font-size:15px;
+      background:white;
+      color:var(--text);
     }
 
     .action {
-      background: var(--primary);
-      color: white;
-      width: 100%;
-      margin-top: 10px;
-    }
-
-    .secondary {
-      background: #ede9fe;
-      color: #5b4de8;
-    }
-
-    .danger {
-      background: #fee2e2;
-      color: #b91c1c;
-    }
-
-    .result-image {
-      width: 100%;
-      margin-top: 12px;
-      border-radius: 16px;
-      border:
-        1px solid var(--border);
+      background:var(--primary);
+      color:white;
+      width:100%;
+      margin-top:10px;
     }
 
     .hidden {
-      display: none;
+      display:none;
     }
 
     .tabs {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      margin-bottom: 14px;
+      display:flex;
+      gap:8px;
+      overflow-x:auto;
+      margin-bottom:14px;
     }
 
     .tab {
-      white-space: nowrap;
-      background: #f3f4f6;
-      color: #374151;
+      white-space:nowrap;
+      background:#f3f4f6;
+      color:#374151;
     }
 
     .tab.active {
-      background: var(--primary);
-      color: white;
+      background:var(--primary);
+      color:white;
+    }
+
+    #imageStatus {
+      margin-top:12px;
+      font-size:14px;
+      color:var(--muted);
     }
 
     footer {
-      padding: 16px 16px 28px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
+      padding:16px 16px 28px;
+      text-align:center;
+      color:var(--muted);
+      font-size:12px;
     }
 
-    @media (max-width: 520px) {
+    @media(max-width:520px) {
       .grid {
-        grid-template-columns: 1fr;
+        grid-template-columns:1fr;
       }
     }
   </style>
@@ -318,24 +280,17 @@
       உங்கள் AI மொபைல் உதவியாளர்
     </div>
 
-
     <div class="toolbar">
 
-      <button
-        onclick="setLang('ta')"
-      >
+      <button onclick="setLang('ta')">
         தமிழ்
       </button>
 
-      <button
-        onclick="setLang('en')"
-      >
+      <button onclick="setLang('en')">
         English
       </button>
 
-      <button
-        onclick="startVoice()"
-      >
+      <button onclick="startVoice()">
         🎤 Voice
       </button>
 
@@ -346,15 +301,11 @@
         🔊 Reply ON
       </button>
 
-      <button
-        onclick="installPromptHandler()"
-      >
+      <button onclick="installPromptHandler()">
         ↓ Install
       </button>
 
-
       <label class="file-label">
-
         📷 Photo
 
         <input
@@ -363,7 +314,6 @@
           accept="image/*"
           onchange="handleImage(event)"
         >
-
       </label>
 
     </div>
@@ -384,12 +334,10 @@
         class="muted"
         style="margin-top:8px;"
       >
-        Nila secure backend-க்கு
-        இணைக்கப்பட்டுள்ளது.
+        Nila secure backend-க்கு இணைக்கப்பட்டுள்ளது.
       </div>
 
     </div>
-
 
 
     <div class="card">
@@ -397,7 +345,6 @@
       <div id="chat"></div>
 
     </div>
-
 
 
     <div class="card">
@@ -420,7 +367,6 @@
       </div>
 
     </div>
-
 
 
     <div
@@ -447,41 +393,40 @@
 
         <button
           class="tab active"
-          onclick="showImageTool('analyze', this)"
+          onclick="showImageTool('analyze',this)"
         >
           Analyze
         </button>
 
         <button
           class="tab"
-          onclick="showImageTool('edit', this)"
+          onclick="showImageTool('edit',this)"
         >
           Edit
         </button>
 
         <button
           class="tab"
-          onclick="showImageTool('dress', this)"
+          onclick="showImageTool('dress',this)"
         >
           👗 Dress
         </button>
 
         <button
           class="tab"
-          onclick="showImageTool('background', this)"
+          onclick="showImageTool('background',this)"
         >
           Background
         </button>
 
         <button
           class="tab"
-          onclick="showImageTool('hair', this)"
+          onclick="showImageTool('hair',this)"
         >
           Hair
         </button>
 
       </div>
-
 
 
       <div
@@ -492,7 +437,7 @@
         <textarea
           id="analyzePrompt"
           class="field"
-          placeholder="இந்த photo-வில் என்ன இருக்கிறது? அல்லது error என்ன என்று கேளுங்கள்..."
+          placeholder="இந்த photo-வில் என்ன இருக்கிறது?"
         ></textarea>
 
         <button
@@ -505,7 +450,6 @@
       </div>
 
 
-
       <div
         id="editTool"
         class="imageTool hidden"
@@ -514,18 +458,17 @@
         <textarea
           id="editPrompt"
           class="field"
-          placeholder="என்ன மாற்ற வேண்டும்? Example: background blur செய்து lighting improve செய்"
+          placeholder="Edit instruction இங்கே வரும்..."
         ></textarea>
 
         <button
           class="action"
           onclick="editPhotoCustom()"
         >
-          ✨ Edit Photo
+          ✨ Prepare Edit
         </button>
 
       </div>
-
 
 
       <div
@@ -573,37 +516,14 @@
             id="dressColor"
             class="field"
           >
-            <option value="red">
-              Red
-            </option>
-
-            <option value="blue">
-              Blue
-            </option>
-
-            <option value="black">
-              Black
-            </option>
-
-            <option value="white">
-              White
-            </option>
-
-            <option value="green">
-              Green
-            </option>
-
-            <option value="yellow">
-              Yellow
-            </option>
-
-            <option value="pink">
-              Pink
-            </option>
-
-            <option value="orange">
-              Orange
-            </option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+            <option value="green">Green</option>
+            <option value="yellow">Yellow</option>
+            <option value="pink">Pink</option>
+            <option value="orange">Orange</option>
           </select>
 
         </div>
@@ -613,7 +533,7 @@
           id="dressStyle"
           class="field"
           style="margin-top:10px;"
-          placeholder="Style: traditional / modern / simple / office"
+          placeholder="traditional / modern / simple / office"
         >
 
 
@@ -621,11 +541,10 @@
           class="action"
           onclick="changeDress()"
         >
-          👗 Change Dress
+          👗 Prepare Dress Change
         </button>
 
       </div>
-
 
 
       <div
@@ -636,18 +555,17 @@
         <input
           id="backgroundPrompt"
           class="field"
-          placeholder="Example: beach, office, garden, studio"
+          placeholder="beach, office, garden, studio..."
         >
 
         <button
           class="action"
           onclick="changeBackground()"
         >
-          🌄 Change Background
+          🌄 Prepare Background Change
         </button>
 
       </div>
-
 
 
       <div
@@ -684,12 +602,11 @@
           </option>
         </select>
 
-
         <button
           class="action"
           onclick="changeHair()"
         >
-          💇 Change Hair
+          💇 Prepare Hair Change
         </button>
 
       </div>
@@ -697,50 +614,7 @@
 
       <div id="imageStatus"></div>
 
-
-      <img
-        id="editedResult"
-        class="result-image hidden"
-        alt="Edited result"
-      >
-
     </div>
-
-
-
-    <div class="card">
-
-      <div class="section-title">
-        🎨 Generate Image
-      </div>
-
-
-      <textarea
-        id="generatePrompt"
-        class="field"
-        placeholder="Example: Create a realistic blue car driving on a mountain road at sunrise"
-      ></textarea>
-
-
-      <button
-        class="action"
-        onclick="generateImage()"
-      >
-        🎨 Generate Image
-      </button>
-
-
-      <div id="generateStatus"></div>
-
-
-      <img
-        id="generatedImage"
-        class="result-image hidden"
-        alt="Generated image"
-      >
-
-    </div>
-
 
   </main>
 
@@ -754,149 +628,130 @@
 
 <script>
 
-let lang = 'ta';
+let lang='ta';
 
-let deferredPrompt = null;
+let deferredPrompt=null;
 
-let voiceReplyEnabled = true;
+let voiceReplyEnabled=true;
 
-let selectedImageBase64 = null;
-
-
-
-const BACKEND =
-  'https://nila-v2-backend.vercel.app';
+let selectedImageBase64=null;
 
 
-const CHAT_API =
-  BACKEND + '/api/chat';
+const BACKEND=
+'https://nila-v2-backend.vercel.app';
+
+const CHAT_API=
+BACKEND+'/api/chat';
+
+const ANALYZE_API=
+BACKEND+'/api/image-analyze';
 
 
-const ANALYZE_API =
-  BACKEND + '/api/image-analyze';
+const texts={
 
-
-const GENERATE_API =
-  BACKEND + '/api/image-generate';
-
-
-const EDIT_API =
-  BACKEND + '/api/image-edit';
-
-
-
-const texts = {
-
-  ta: {
+  ta:{
     tagline:
-      'உங்கள் AI மொபைல் உதவியாளர்',
+    'உங்கள் AI மொபைல் உதவியாளர்',
 
     placeholder:
-      'Nila-விடம் ஏதேனும் கேளுங்கள்...',
+    'Nila-விடம் ஏதேனும் கேளுங்கள்...',
 
     empty:
-      'ஒரு message type செய்யுங்கள்.',
+    'ஒரு message type செய்யுங்கள்.',
 
     welcome:
-      'வணக்கம்! நான் Nila. 😊\n\nஉங்களுக்கு என்ன உதவி வேண்டும்?',
+    'வணக்கம்! நான் Nila. 😊\n\nஉங்களுக்கு என்ன உதவி வேண்டும்?',
 
     connection:
-      'AI connection error: ',
+    'AI connection error: ',
 
     voiceUnsupported:
-      'இந்த browser-ல் voice input support இல்லை.',
+    'இந்த browser-ல் voice input support இல்லை.',
 
     install:
-      'Install option இன்னும் available இல்லை. Chrome menu-ல் Add to Home Screen பயன்படுத்தலாம்.'
+    'Chrome menu-ல் Add to Home Screen பயன்படுத்தலாம்.'
   },
 
-
-  en: {
+  en:{
     tagline:
-      'Your AI mobile assistant',
+    'Your AI mobile assistant',
 
     placeholder:
-      'Ask Nila anything...',
+    'Ask Nila anything...',
 
     empty:
-      'Please type a message.',
+    'Please type a message.',
 
     welcome:
-      'Hello! I am Nila. 😊\n\nHow can I help you?',
+    'Hello! I am Nila. 😊\n\nHow can I help you?',
 
     connection:
-      'AI connection error: ',
+    'AI connection error: ',
 
     voiceUnsupported:
-      'Voice input is not supported in this browser.',
+    'Voice input is not supported in this browser.',
 
     install:
-      'Install is not available yet. Use Add to Home Screen from the Chrome menu.'
+    'Use Add to Home Screen from the Chrome menu.'
   }
 
 };
 
 
-
 function addMessage(
   text,
-  who = 'bot'
-) {
+  who='bot'
+){
 
-  const msg =
-    document.createElement('div');
+  const msg=
+  document.createElement('div');
 
-  msg.className =
-    `msg ${who}`;
+  msg.className=
+  `msg ${who}`;
 
-  msg.textContent =
-    text;
+  msg.textContent=
+  text;
 
   document
-    .getElementById('chat')
-    .appendChild(msg);
+  .getElementById('chat')
+  .appendChild(msg);
 
   msg.scrollIntoView({
-    behavior: 'smooth',
-    block: 'end'
+    behavior:'smooth',
+    block:'end'
   });
 
 }
 
 
-
 function setLang(
   newLang
-) {
+){
 
-  lang = newLang;
-
-  document
-    .getElementById('tagline')
-    .textContent =
-    texts[lang].tagline;
+  lang=newLang;
 
   document
-    .getElementById('prompt')
-    .placeholder =
-    texts[lang].placeholder;
+  .getElementById('tagline')
+  .textContent=
+  texts[lang].tagline;
+
+  document
+  .getElementById('prompt')
+  .placeholder=
+  texts[lang].placeholder;
 
 }
 
 
+async function sendMessage(){
 
-async function sendMessage() {
+  const input=
+  document.getElementById('prompt');
 
-  const input =
-    document.getElementById(
-      'prompt'
-    );
+  const text=
+  input.value.trim();
 
-  const text =
-    input.value.trim();
-
-
-  if (!text) {
+  if(!text){
 
     alert(
       texts[lang].empty
@@ -906,62 +761,47 @@ async function sendMessage() {
 
   }
 
-
   addMessage(
     text,
     'user'
   );
 
+  input.value='';
 
-  input.value =
-    '';
+  const btn=
+  document.getElementById(
+    'sendBtn'
+  );
 
+  btn.disabled=true;
 
-  const btn =
-    document.getElementById(
-      'sendBtn'
+  btn.textContent='...';
+
+  try{
+
+    const response=
+    await fetch(
+      CHAT_API,
+      {
+        method:'POST',
+
+        headers:{
+          'Content-Type':
+          'application/json'
+        },
+
+        body:
+        JSON.stringify({
+          message:text,
+          language:lang
+        })
+      }
     );
 
+    const data=
+    await response.json();
 
-  btn.disabled =
-    true;
-
-
-  btn.textContent =
-    '...';
-
-
-  try {
-
-    const response =
-      await fetch(
-        CHAT_API,
-        {
-          method:
-            'POST',
-
-          headers: {
-            'Content-Type':
-              'application/json'
-          },
-
-          body:
-            JSON.stringify({
-              message:
-                text,
-
-              language:
-                lang
-            })
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok) {
+    if(!response.ok){
 
       throw new Error(
         data.error ||
@@ -970,272 +810,197 @@ async function sendMessage() {
 
     }
 
-
-    const reply =
-      data.reply ||
-      'No response returned.';
-
+    const reply=
+    data.reply ||
+    'No response returned.';
 
     addMessage(
       reply,
       'bot'
     );
 
-
     speakReply(
       reply
     );
 
-
-  } catch (error) {
+  }catch(error){
 
     addMessage(
-      texts[lang].connection +
+      texts[lang].connection+
       error.message,
       'bot'
     );
 
-  } finally {
+  }finally{
 
-    btn.disabled =
-      false;
+    btn.disabled=false;
 
-    btn.textContent =
-      'Send';
+    btn.textContent='Send';
 
   }
 
 }
 
 
+function toggleVoiceReply(){
 
-function toggleVoiceReply() {
+  voiceReplyEnabled=
+  !voiceReplyEnabled;
 
-  voiceReplyEnabled =
-    !voiceReplyEnabled;
+  const button=
+  document.getElementById(
+    'voiceReplyBtn'
+  );
 
+  button.textContent=
+  voiceReplyEnabled
+  ? '🔊 Reply ON'
+  : '🔇 Reply OFF';
 
-  const button =
-    document.getElementById(
-      'voiceReplyBtn'
-    );
-
-
-  button.textContent =
-    voiceReplyEnabled
-      ? '🔊 Reply ON'
-      : '🔇 Reply OFF';
-
-
-  if (
+  if(
     !voiceReplyEnabled &&
     'speechSynthesis' in window
-  ) {
+  ){
 
     window
-      .speechSynthesis
-      .cancel();
+    .speechSynthesis
+    .cancel();
 
   }
 
 }
-
 
 
 function speakReply(
   text
-) {
+){
 
-  if (!voiceReplyEnabled) {
+  if(!voiceReplyEnabled){
     return;
   }
 
-
-  if (
+  if(
     !('speechSynthesis' in window)
-  ) {
+  ){
     return;
   }
 
+  window
+  .speechSynthesis
+  .cancel();
+
+  const speech=
+  new SpeechSynthesisUtterance(
+    text
+  );
+
+  speech.lang=
+  lang==='ta'
+  ? 'ta-IN'
+  : 'en-IN';
+
+  speech.rate=1;
 
   window
-    .speechSynthesis
-    .cancel();
-
-
-  const speech =
-    new SpeechSynthesisUtterance(
-      text
-    );
-
-
-  speech.lang =
-    lang === 'ta'
-      ? 'ta-IN'
-      : 'en-IN';
-
-
-  speech.rate =
-    1;
-
-
-  const voices =
-    window
-      .speechSynthesis
-      .getVoices();
-
-
-  const matching =
-    voices.find(
-      function(v) {
-
-        const code =
-          v.lang
-            .toLowerCase();
-
-        if (lang === 'ta') {
-
-          return code
-            .startsWith('ta');
-
-        }
-
-        return code
-          .startsWith('en-in') ||
-          code
-            .startsWith('en');
-
-      }
-    );
-
-
-  if (matching) {
-
-    speech.voice =
-      matching;
-
-  }
-
-
-  window
-    .speechSynthesis
-    .speak(
-      speech
-    );
+  .speechSynthesis
+  .speak(
+    speech
+  );
 
 }
 
 
+function startVoice(){
 
-function startVoice() {
+  const Recognition=
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
 
-  const Recognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-
-  if (!Recognition) {
+  if(!Recognition){
 
     alert(
       texts[lang]
-        .voiceUnsupported
+      .voiceUnsupported
     );
 
     return;
 
   }
 
+  const recognition=
+  new Recognition();
 
-  const recognition =
-    new Recognition();
+  recognition.lang=
+  lang==='ta'
+  ? 'ta-IN'
+  : 'en-IN';
 
+  recognition.interimResults=false;
 
-  recognition.lang =
-    lang === 'ta'
-      ? 'ta-IN'
-      : 'en-IN';
+  recognition.maxAlternatives=1;
 
+  recognition.onresult=
+  function(event){
 
-  recognition.interimResults =
-    false;
+    document
+    .getElementById(
+      'prompt'
+    )
+    .value=
+    event
+    .results[0][0]
+    .transcript;
 
-
-  recognition.maxAlternatives =
-    1;
-
-
-  recognition.onresult =
-    function(event) {
-
-      document
-        .getElementById(
-          'prompt'
-        )
-        .value =
-        event
-          .results[0][0]
-          .transcript;
-
-    };
-
+  };
 
   recognition.start();
 
 }
 
 
-
 function handleImage(
   event
-) {
+){
 
-  const file =
-    event.target.files[0];
+  const file=
+  event.target.files[0];
 
-
-  if (!file) {
+  if(!file){
     return;
   }
 
+  const reader=
+  new FileReader();
 
-  const reader =
-    new FileReader();
+  reader.onload=
+  function(e){
 
+    selectedImageBase64=
+    e.target.result;
 
-  reader.onload =
-    function(e) {
+    const preview=
+    document.getElementById(
+      'photoPreview'
+    );
 
-      selectedImageBase64 =
-        e.target.result;
+    preview.src=
+    selectedImageBase64;
 
+    document
+    .getElementById(
+      'photoCard'
+    )
+    .classList
+    .remove('hidden');
 
-      const preview =
-        document.getElementById(
-          'photoPreview'
-        );
+    addMessage(
+      lang==='ta'
+      ? 'படம் upload ஆனது. Analyze செய்யலாம்.'
+      : 'Photo uploaded. You can analyze it.',
+      'bot'
+    );
 
-
-      preview.src =
-        selectedImageBase64;
-
-
-      document
-        .getElementById(
-          'photoCard'
-        )
-        .classList
-        .remove('hidden');
-
-
-      addMessage(
-        lang === 'ta'
-          ? 'படம் upload ஆனது. இப்போது Analyze அல்லது Edit செய்யலாம்.'
-          : 'Photo uploaded. You can now analyze or edit it.',
-        'bot'
-      );
-
-    };
-
+  };
 
   reader.readAsDataURL(
     file
@@ -1244,58 +1009,57 @@ function handleImage(
 }
 
 
-
 function showImageTool(
   name,
   button
-) {
+){
 
   document
-    .querySelectorAll(
-      '.imageTool'
-    )
-    .forEach(
-      function(el) {
+  .querySelectorAll(
+    '.imageTool'
+  )
+  .forEach(
+    function(el){
 
-        el.classList
-          .add('hidden');
+      el.classList
+      .add('hidden');
 
-      }
-    );
-
-
-  document
-    .getElementById(
-      name + 'Tool'
-    )
-    .classList
-    .remove('hidden');
-
+    }
+  );
 
   document
-    .querySelectorAll(
-      '.tab'
-    )
-    .forEach(
-      function(el) {
+  .getElementById(
+    name+'Tool'
+  )
+  .classList
+  .remove('hidden');
 
-        el.classList
-          .remove('active');
+  document
+  .querySelectorAll(
+    '.tab'
+  )
+  .forEach(
+    function(el){
 
-      }
-    );
+      el.classList
+      .remove('active');
 
+    }
+  );
 
-  button.classList
+  if(button){
+
+    button.classList
     .add('active');
+
+  }
 
 }
 
 
+async function analyzePhoto(){
 
-async function analyzePhoto() {
-
-  if (!selectedImageBase64) {
+  if(!selectedImageBase64){
 
     alert(
       'முதலில் photo upload செய்யுங்கள்.'
@@ -1305,56 +1069,50 @@ async function analyzePhoto() {
 
   }
 
-
-  const question =
-    document
-      .getElementById(
-        'analyzePrompt'
-      )
-      .value
-      .trim() ||
-    'Describe this image and explain anything important you see.';
-
+  const question=
+  document
+  .getElementById(
+    'analyzePrompt'
+  )
+  .value
+  .trim() ||
+  'Describe this image and explain anything important you see.';
 
   setImageStatus(
     'Photo analyze ஆகிறது...'
   );
 
+  try{
 
-  try {
+    const response=
+    await fetch(
+      ANALYZE_API,
+      {
+        method:'POST',
 
-    const response =
-      await fetch(
-        ANALYZE_API,
-        {
-          method:
-            'POST',
+        headers:{
+          'Content-Type':
+          'application/json'
+        },
 
-          headers: {
-            'Content-Type':
-              'application/json'
-          },
+        body:
+        JSON.stringify({
+          image:
+          selectedImageBase64,
 
-          body:
-            JSON.stringify({
-              image:
-                selectedImageBase64,
+          prompt:
+          question,
 
-              prompt:
-                question,
+          language:
+          lang
+        })
+      }
+    );
 
-              language:
-                lang
-            })
-        }
-      );
+    const data=
+    await response.json();
 
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok) {
+    if(!response.ok){
 
       throw new Error(
         data.error ||
@@ -1363,32 +1121,27 @@ async function analyzePhoto() {
 
     }
 
-
-    const reply =
-      data.reply ||
-      'No analysis returned.';
-
+    const reply=
+    data.reply ||
+    'No analysis returned.';
 
     addMessage(
       reply,
       'bot'
     );
 
-
     speakReply(
       reply
     );
-
 
     setImageStatus(
       'Analysis complete ✅'
     );
 
-
-  } catch (error) {
+  }catch(error){
 
     setImageStatus(
-      'Error: ' +
+      'Error: '+
       error.message
     );
 
@@ -1397,210 +1150,51 @@ async function analyzePhoto() {
 }
 
 
-
-async function generateImage() {
-
-  const prompt =
-    document
-      .getElementById(
-        'generatePrompt'
-      )
-      .value
-      .trim();
-
-
-  if (!prompt) {
-
-    alert(
-      'Image prompt type செய்யுங்கள்.'
-    );
-
-    return;
-
-  }
-
-
-  const status =
-    document.getElementById(
-      'generateStatus'
-    );
-
-
-  status.textContent =
-    'Image உருவாக்கப்படுகிறது...';
-
-
-  try {
-
-    const response =
-      await fetch(
-        GENERATE_API,
-        {
-          method:
-            'POST',
-
-          headers: {
-            'Content-Type':
-              'application/json'
-          },
-
-          body:
-            JSON.stringify({
-              prompt:
-                prompt
-            })
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        data.error ||
-        'Image generation failed'
-      );
-
-    }
-
-
-    const image =
-      document.getElementById(
-        'generatedImage'
-      );
-
-
-    image.src =
-      data.image;
-
-
-    image.classList
-      .remove('hidden');
-
-
-    status.textContent =
-      'Image ready ✅';
-
-
-  } catch (error) {
-
-    status.textContent =
-      'Error: ' +
-      error.message;
-
-  }
-
-}
-
-
-
-async function runImageEdit(
+function showPreparedEdit(
   instruction
-) {
+){
 
-  if (!selectedImageBase64) {
-
-    alert(
-      'முதலில் photo upload செய்யுங்கள்.'
-    );
-
-    return;
-
-  }
-
-
-  setImageStatus(
-    'Photo edit ஆகிறது...'
+  const editBox=
+  document.getElementById(
+    'editPrompt'
   );
 
+  editBox.value=
+  instruction.trim();
 
-  try {
+  const editButton=
+  document.querySelector(
+    'button[onclick*="showImageTool(\'edit\'"]'
+  );
 
-    const response =
-      await fetch(
-        EDIT_API,
-        {
-          method:
-            'POST',
+  showImageTool(
+    'edit',
+    editButton
+  );
 
-          headers: {
-            'Content-Type':
-              'application/json'
-          },
+  setImageStatus(
+    'Edit instruction ready ✅'
+  );
 
-          body:
-            JSON.stringify({
-              image:
-                selectedImageBase64,
-
-              prompt:
-                instruction
-            })
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        data.error ||
-        'Photo editing failed'
-      );
-
-    }
-
-
-    const image =
-      document.getElementById(
-        'editedResult'
-      );
-
-
-    image.src =
-      data.image;
-
-
-    image.classList
-      .remove('hidden');
-
-
-    setImageStatus(
-      'Edit complete ✅'
-    );
-
-
-  } catch (error) {
-
-    setImageStatus(
-      'Error: ' +
-      error.message
-    );
-
-  }
+  editBox.scrollIntoView({
+    behavior:'smooth',
+    block:'center'
+  });
 
 }
 
 
+function editPhotoCustom(){
 
-function editPhotoCustom() {
+  const instruction=
+  document
+  .getElementById(
+    'editPrompt'
+  )
+  .value
+  .trim();
 
-  const instruction =
-    document
-      .getElementById(
-        'editPrompt'
-      )
-      .value
-      .trim();
-
-
-  if (!instruction) {
+  if(!instruction){
 
     alert(
       'என்ன edit செய்ய வேண்டும் என்று type செய்யுங்கள்.'
@@ -1610,85 +1204,77 @@ function editPhotoCustom() {
 
   }
 
-
-  runImageEdit(
-    instruction
+  setImageStatus(
+    'Edit instruction ready ✅'
   );
 
 }
 
 
+function changeDress(){
 
-function changeDress() {
+  const type=
+  document
+  .getElementById(
+    'dressType'
+  )
+  .value;
 
-  const type =
-    document
-      .getElementById(
-        'dressType'
-      )
-      .value;
+  const color=
+  document
+  .getElementById(
+    'dressColor'
+  )
+  .value;
 
+  const style=
+  document
+  .getElementById(
+    'dressStyle'
+  )
+  .value
+  .trim() ||
+  'natural';
 
-  const color =
-    document
-      .getElementById(
-        'dressColor'
-      )
-      .value;
+  const instruction=`
+Keep the uploaded photo unchanged except for clothing.
 
+Keep:
+- same person
+- same face
+- same hairstyle
+- same pose
+- same body position
+- same background
 
-  const style =
-    document
-      .getElementById(
-        'dressStyle'
-      )
-      .value
-      .trim() ||
-    'natural';
-
-
-  const instruction =
-    `
-Edit the uploaded photo.
-Keep the same person,
-same face,
-same pose,
-same body position,
-and same background.
-
-Change only the clothing.
-
-New clothing:
-${color} ${type}.
+Change clothing to:
+${color} ${type}
 
 Style:
-${style}.
+${style}
 
 Keep the result realistic,
 natural and clean.
 `;
 
-
-  runImageEdit(
+  showPreparedEdit(
     instruction
   );
 
 }
 
 
+function changeBackground(){
 
-function changeBackground() {
+  const background=
+  document
+  .getElementById(
+    'backgroundPrompt'
+  )
+  .value
+  .trim();
 
-  const background =
-    document
-      .getElementById(
-        'backgroundPrompt'
-      )
-      .value
-      .trim();
-
-
-  if (!background) {
+  if(!background){
 
     alert(
       'Background type செய்யுங்கள்.'
@@ -1698,91 +1284,89 @@ function changeBackground() {
 
   }
 
+  const instruction=`
+Keep the same person,
+face,
+clothing,
+hairstyle and pose.
 
-  const instruction =
-    `
-Keep the same person and face.
 Change only the background.
 
 New background:
-${background}.
+${background}
 
-Keep lighting and shadows realistic.
+Match the lighting,
+shadows and perspective naturally.
 `;
 
-
-  runImageEdit(
+  showPreparedEdit(
     instruction
   );
 
 }
 
 
+function changeHair(){
 
-function changeHair() {
+  const hair=
+  document
+  .getElementById(
+    'hairStyle'
+  )
+  .value;
 
-  const hair =
-    document
-      .getElementById(
-        'hairStyle'
-      )
-      .value;
-
-
-  const instruction =
-    `
+  const instruction=`
 Keep the same person,
 face,
 clothing,
 pose and background.
 
-Change only the hairstyle to:
-${hair}.
+Change only the hairstyle.
 
-Keep the result realistic.
+New hairstyle:
+${hair}
+
+Keep the hair realistic
+and naturally matched to the face.
 `;
 
-
-  runImageEdit(
+  showPreparedEdit(
     instruction
   );
 
 }
 
 
-
 function setImageStatus(
   message
-) {
+){
 
   document
-    .getElementById(
-      'imageStatus'
-    )
-    .textContent =
-    message;
+  .getElementById(
+    'imageStatus'
+  )
+  .textContent=
+  message;
 
 }
 
 
-
 window.addEventListener(
   'beforeinstallprompt',
-  function(event) {
+  function(event){
 
     event.preventDefault();
 
-    deferredPrompt =
-      event;
+    deferredPrompt=
+    event;
 
   }
 );
 
 
+async function installPromptHandler(){
 
-async function installPromptHandler() {
-
-  if (!deferredPrompt) {
+  if(!deferredPrompt){
 
     alert(
       texts[lang].install
@@ -1792,75 +1376,29 @@ async function installPromptHandler() {
 
   }
 
-
   deferredPrompt.prompt();
 
-
   await deferredPrompt
-    .userChoice;
+  .userChoice;
 
-
-  deferredPrompt =
-    null;
+  deferredPrompt=null;
 
 }
-
 
 
 document
-  .getElementById(
-    'prompt'
-  )
-  .addEventListener(
-    'keydown',
-    function(event) {
+.getElementById(
+  'prompt'
+)
+.addEventListener(
+  'keydown',
+  function(event){
 
-      if (
-        event.key === 'Enter' &&
-        !event.shiftKey
-      ) {
+    if(
+      event.key==='Enter' &&
+      !event.shiftKey
+    ){
 
-        event.preventDefault();
+      event.preventDefault();
 
-        sendMessage();
-
-      }
-
-    }
-  );
-
-
-
-if (
-  'serviceWorker' in navigator
-) {
-
-  window.addEventListener(
-    'load',
-    function() {
-
-      navigator
-        .serviceWorker
-        .register(
-          './sw.js'
-        )
-        .catch(
-          function() {}
-        );
-
-    }
-  );
-
-}
-
-
-
-addMessage(
-  texts.ta.welcome,
-  'bot'
-);
-
-</script>
-
-</body>
-</html>
+      s
