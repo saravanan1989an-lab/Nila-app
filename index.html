@@ -2,70 +2,91 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Nila AI Assistant</title>
+
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#6d5efc">
+  <meta
+    name="theme-color"
+    content="#6d5efc"
+  >
 
   <style>
     :root {
-      --bg:#f5f7fb;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --primary:#6d5efc;
-      --primary2:#8a7fff;
-      --border:#e5e7eb;
-      --soft:#f3f4f6;
-      --user:#e9edff;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #6d5efc;
+      --primary2: #8a7fff;
+      --border: #e5e7eb;
+      --soft: #f3f4f6;
+      --user: #e9edff;
+      --success: #16a34a;
+      --danger: #dc2626;
     }
 
     * {
-      box-sizing:border-box;
+      box-sizing: border-box;
     }
 
     body {
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:var(--bg);
-      color:var(--text);
+      margin: 0;
+      font-family:
+        system-ui,
+        -apple-system,
+        Segoe UI,
+        Roboto,
+        Arial,
+        sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
 
     .app {
-      max-width:760px;
-      margin:0 auto;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
+      max-width: 760px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
-      position:sticky;
-      top:0;
-      z-index:20;
-      padding:18px;
-      color:white;
-      background:linear-gradient(135deg,var(--primary),var(--primary2));
-      box-shadow:0 4px 14px rgba(0,0,0,.08);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 18px;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary2)
+        );
+      box-shadow:
+        0 4px 14px rgba(0,0,0,.08);
     }
 
     .title {
-      font-size:28px;
-      font-weight:800;
+      font-size: 28px;
+      font-weight: 800;
     }
 
     .subtitle {
-      margin-top:4px;
-      opacity:.95;
-      font-size:15px;
+      margin-top: 4px;
+      opacity: .95;
+      font-size: 15px;
     }
 
     .toolbar {
-      display:flex;
-      gap:9px;
-      flex-wrap:wrap;
-      margin-top:15px;
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-top: 15px;
     }
 
     button,
@@ -73,191 +94,213 @@
     input,
     textarea,
     .file-label {
-      font-family:inherit;
+      font-family: inherit;
     }
 
     button,
     .file-label {
-      border:0;
-      border-radius:15px;
-      padding:11px 15px;
-      font-size:14px;
-      font-weight:700;
-      cursor:pointer;
+      border: 0;
+      border-radius: 15px;
+      padding: 11px 15px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
     header button,
     header .file-label {
-      background:white;
-      color:var(--primary);
+      background: white;
+      color: var(--primary);
     }
 
     .file-label input {
-      display:none;
+      display: none;
     }
 
     .container {
-      padding:14px;
-      display:flex;
-      flex-direction:column;
-      gap:13px;
-      flex:1;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      flex: 1;
     }
 
     .card {
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:20px;
-      padding:15px;
-      box-shadow:0 4px 14px rgba(16,24,40,.04);
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 15px;
+      box-shadow:
+        0 4px 14px rgba(16,24,40,.04);
     }
 
     .badge {
-      display:inline-block;
-      padding:6px 11px;
-      border-radius:999px;
-      background:#ede9fe;
-      color:#5b4de8;
-      font-size:12px;
-      font-weight:800;
+      display: inline-block;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: #ede9fe;
+      color: #5b4de8;
+      font-size: 12px;
+      font-weight: 800;
     }
 
     .muted {
-      color:var(--muted);
-      font-size:13px;
+      color: var(--muted);
+      font-size: 13px;
     }
 
     #chat {
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      min-height:260px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 260px;
     }
 
     .msg {
-      max-width:88%;
-      padding:13px 15px;
-      border-radius:17px;
-      line-height:1.48;
-      white-space:pre-wrap;
-      overflow-wrap:anywhere;
+      max-width: 88%;
+      padding: 13px 15px;
+      border-radius: 17px;
+      line-height: 1.48;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
     }
 
     .user {
-      align-self:flex-end;
-      background:var(--user);
+      align-self: flex-end;
+      background: var(--user);
     }
 
     .bot {
-      align-self:flex-start;
-      background:var(--soft);
+      align-self: flex-start;
+      background: var(--soft);
     }
 
     .row {
-      display:flex;
-      gap:10px;
-      align-items:flex-end;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
     }
 
     textarea {
-      width:100%;
-      min-height:58px;
-      max-height:170px;
-      resize:vertical;
-      border:1px solid var(--border);
-      border-radius:17px;
-      padding:13px;
-      font-size:16px;
-      background:white;
-      color:var(--text);
+      width: 100%;
+      min-height: 58px;
+      max-height: 220px;
+      resize: vertical;
+      border:
+        1px solid var(--border);
+      border-radius: 17px;
+      padding: 13px;
+      font-size: 16px;
+      background: white;
+      color: var(--text);
     }
 
     .send {
-      min-width:88px;
-      background:var(--primary);
-      color:white;
+      min-width: 88px;
+      background: var(--primary);
+      color: white;
     }
 
     .send:disabled {
-      opacity:.55;
+      opacity: .55;
     }
 
     .section-title {
-      font-size:18px;
-      font-weight:800;
-      margin-bottom:12px;
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 12px;
     }
 
-    .photo-preview {
-      width:100%;
-      max-height:380px;
-      object-fit:contain;
-      border-radius:16px;
-      border:1px solid var(--border);
-      background:#fafafa;
+    .photo-preview,
+    .result-image {
+      width: 100%;
+      max-height: 480px;
+      object-fit: contain;
+      border-radius: 16px;
+      border:
+        1px solid var(--border);
+      background: #fafafa;
+    }
+
+    .result-image {
+      margin-top: 12px;
     }
 
     .grid {
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px;
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+      gap: 10px;
     }
 
     .field {
-      width:100%;
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:12px;
-      font-size:15px;
-      background:white;
-      color:var(--text);
+      width: 100%;
+      border:
+        1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 15px;
+      background: white;
+      color: var(--text);
     }
 
     .action {
-      background:var(--primary);
-      color:white;
-      width:100%;
-      margin-top:10px;
+      background: var(--primary);
+      color: white;
+      width: 100%;
+      margin-top: 10px;
     }
 
     .hidden {
-      display:none;
+      display: none;
     }
 
     .tabs {
-      display:flex;
-      gap:8px;
-      overflow-x:auto;
-      margin-bottom:14px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 14px;
+      margin-top: 14px;
     }
 
     .tab {
-      white-space:nowrap;
-      background:#f3f4f6;
-      color:#374151;
+      white-space: nowrap;
+      background: #f3f4f6;
+      color: #374151;
     }
 
     .tab.active {
-      background:var(--primary);
-      color:white;
+      background: var(--primary);
+      color: white;
     }
 
-    #imageStatus {
-      margin-top:12px;
-      font-size:14px;
-      color:var(--muted);
+    #imageStatus,
+    #generateStatus {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      white-space: pre-wrap;
     }
 
     footer {
-      padding:16px 16px 28px;
-      text-align:center;
-      color:var(--muted);
-      font-size:12px;
+      padding: 16px 16px 28px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
     }
 
-    @media(max-width:520px) {
+    @media (max-width: 520px) {
       .grid {
-        grid-template-columns:1fr;
+        grid-template-columns: 1fr;
+      }
+
+      .row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .send {
+        width: 100%;
       }
     }
   </style>
@@ -282,15 +325,21 @@
 
     <div class="toolbar">
 
-      <button onclick="setLang('ta')">
+      <button
+        onclick="setLang('ta')"
+      >
         தமிழ்
       </button>
 
-      <button onclick="setLang('en')">
+      <button
+        onclick="setLang('en')"
+      >
         English
       </button>
 
-      <button onclick="startVoice()">
+      <button
+        onclick="startVoice()"
+      >
         🎤 Voice
       </button>
 
@@ -301,13 +350,14 @@
         🔊 Reply ON
       </button>
 
-      <button onclick="installPromptHandler()">
+      <button
+        onclick="installPromptHandler()"
+      >
         ↓ Install
       </button>
 
       <label class="file-label">
         📷 Photo
-
         <input
           id="photoInput"
           type="file"
@@ -323,9 +373,7 @@
 
   <main class="container">
 
-
     <div class="card">
-
       <span class="badge">
         AI Connected
       </span>
@@ -336,14 +384,11 @@
       >
         Nila secure backend-க்கு இணைக்கப்பட்டுள்ளது.
       </div>
-
     </div>
 
 
     <div class="card">
-
       <div id="chat"></div>
-
     </div>
 
 
@@ -378,50 +423,45 @@
         📷 Photo AI
       </div>
 
-
       <img
         id="photoPreview"
         class="photo-preview"
         alt="Photo preview"
       >
 
-
-      <div
-        class="tabs"
-        style="margin-top:14px;"
-      >
+      <div class="tabs">
 
         <button
           class="tab active"
-          onclick="showImageTool('analyze',this)"
+          onclick="showImageTool('analyze', this)"
         >
           Analyze
         </button>
 
         <button
           class="tab"
-          onclick="showImageTool('edit',this)"
+          onclick="showImageTool('edit', this)"
         >
           Edit
         </button>
 
         <button
           class="tab"
-          onclick="showImageTool('dress',this)"
+          onclick="showImageTool('dress', this)"
         >
           👗 Dress
         </button>
 
         <button
           class="tab"
-          onclick="showImageTool('background',this)"
+          onclick="showImageTool('background', this)"
         >
           Background
         </button>
 
         <button
           class="tab"
-          onclick="showImageTool('hair',this)"
+          onclick="showImageTool('hair', this)"
         >
           Hair
         </button>
@@ -437,7 +477,7 @@
         <textarea
           id="analyzePrompt"
           class="field"
-          placeholder="இந்த photo-வில் என்ன இருக்கிறது?"
+          placeholder="இந்த photo-வில் என்ன இருக்கிறது? அல்லது detail கேளுங்கள்..."
         ></textarea>
 
         <button
@@ -458,14 +498,14 @@
         <textarea
           id="editPrompt"
           class="field"
-          placeholder="Edit instruction இங்கே வரும்..."
+          placeholder="என்ன மாற்ற வேண்டும்? Example: Change background to a beach"
         ></textarea>
 
         <button
           class="action"
           onclick="editPhotoCustom()"
         >
-          ✨ Prepare Edit
+          ✨ Edit Photo
         </button>
 
       </div>
@@ -482,35 +522,14 @@
             id="dressType"
             class="field"
           >
-            <option value="saree">
-              Saree
-            </option>
-
-            <option value="salwar suit">
-              Salwar Suit
-            </option>
-
-            <option value="kurti">
-              Kurti
-            </option>
-
-            <option value="shirt">
-              Shirt
-            </option>
-
-            <option value="t-shirt">
-              T-Shirt
-            </option>
-
-            <option value="formal outfit">
-              Formal
-            </option>
-
-            <option value="casual outfit">
-              Casual
-            </option>
+            <option value="saree">Saree</option>
+            <option value="salwar suit">Salwar Suit</option>
+            <option value="kurti">Kurti</option>
+            <option value="shirt">Shirt</option>
+            <option value="t-shirt">T-Shirt</option>
+            <option value="formal outfit">Formal</option>
+            <option value="casual outfit">Casual</option>
           </select>
-
 
           <select
             id="dressColor"
@@ -528,20 +547,18 @@
 
         </div>
 
-
         <input
           id="dressStyle"
           class="field"
           style="margin-top:10px;"
-          placeholder="traditional / modern / simple / office"
+          placeholder="Style: traditional / modern / simple / office"
         >
-
 
         <button
           class="action"
           onclick="changeDress()"
         >
-          👗 Prepare Dress Change
+          👗 Change Dress
         </button>
 
       </div>
@@ -555,14 +572,14 @@
         <input
           id="backgroundPrompt"
           class="field"
-          placeholder="beach, office, garden, studio..."
+          placeholder="Example: beach, office, garden, studio"
         >
 
         <button
           class="action"
           onclick="changeBackground()"
         >
-          🌄 Prepare Background Change
+          🌄 Change Background
         </button>
 
       </div>
@@ -577,42 +594,60 @@
           id="hairStyle"
           class="field"
         >
-          <option value="loose natural hair">
-            Loose Hair
-          </option>
-
-          <option value="short hairstyle">
-            Short Hair
-          </option>
-
-          <option value="long hairstyle">
-            Long Hair
-          </option>
-
-          <option value="ponytail hairstyle">
-            Ponytail
-          </option>
-
-          <option value="curly hairstyle">
-            Curly Hair
-          </option>
-
-          <option value="straight hairstyle">
-            Straight Hair
-          </option>
+          <option value="loose natural hair">Loose Hair</option>
+          <option value="short hairstyle">Short Hair</option>
+          <option value="long hairstyle">Long Hair</option>
+          <option value="ponytail hairstyle">Ponytail</option>
+          <option value="curly hairstyle">Curly Hair</option>
+          <option value="straight hairstyle">Straight Hair</option>
         </select>
 
         <button
           class="action"
           onclick="changeHair()"
         >
-          💇 Prepare Hair Change
+          💇 Change Hair
         </button>
 
       </div>
 
-
       <div id="imageStatus"></div>
+
+      <img
+        id="editedResult"
+        class="result-image hidden"
+        alt="Edited result"
+      >
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="section-title">
+        🎨 Generate Image
+      </div>
+
+      <textarea
+        id="generatePrompt"
+        class="field"
+        placeholder="Example: Create a realistic blue car driving on a mountain road at sunrise"
+      ></textarea>
+
+      <button
+        class="action"
+        onclick="generateImage()"
+      >
+        🎨 Generate Image
+      </button>
+
+      <div id="generateStatus"></div>
+
+      <img
+        id="generatedImage"
+        class="result-image hidden"
+        alt="Generated image"
+      >
 
     </div>
 
@@ -627,138 +662,131 @@
 
 
 <script>
+let lang = 'ta';
+let deferredPrompt = null;
+let voiceReplyEnabled = true;
+let selectedImageBase64 = null;
 
-let lang='ta';
+const BACKEND =
+  'https://nila-v2-backend.vercel.app';
 
-let deferredPrompt=null;
+const CHAT_API =
+  BACKEND + '/api/chat';
 
-let voiceReplyEnabled=true;
+const ANALYZE_API =
+  BACKEND + '/api/image-analyze';
 
-let selectedImageBase64=null;
+const GENERATE_API =
+  BACKEND + '/api/image-generate';
 
-
-const BACKEND=
-'https://nila-v2-backend.vercel.app';
-
-const CHAT_API=
-BACKEND+'/api/chat';
-
-const ANALYZE_API=
-BACKEND+'/api/image-analyze';
+const EDIT_API =
+  BACKEND + '/api/image-edit';
 
 
-const texts={
-
-  ta:{
+const texts = {
+  ta: {
     tagline:
-    'உங்கள் AI மொபைல் உதவியாளர்',
+      'உங்கள் AI மொபைல் உதவியாளர்',
 
     placeholder:
-    'Nila-விடம் ஏதேனும் கேளுங்கள்...',
+      'Nila-விடம் ஏதேனும் கேளுங்கள்...',
 
     empty:
-    'ஒரு message type செய்யுங்கள்.',
+      'ஒரு message type செய்யுங்கள்.',
 
     welcome:
-    'வணக்கம்! நான் Nila. 😊\n\nஉங்களுக்கு என்ன உதவி வேண்டும்?',
+      'வணக்கம்! நான் Nila. 😊\n\nஉங்களுக்கு என்ன உதவி வேண்டும்?',
 
     connection:
-    'AI connection error: ',
+      'AI connection error: ',
 
     voiceUnsupported:
-    'இந்த browser-ல் voice input support இல்லை.',
+      'இந்த browser-ல் voice input support இல்லை.',
 
     install:
-    'Chrome menu-ல் Add to Home Screen பயன்படுத்தலாம்.'
+      'Install option இல்லை என்றால் Chrome menu-ல் Add to Home Screen பயன்படுத்தலாம்.'
   },
 
-  en:{
+  en: {
     tagline:
-    'Your AI mobile assistant',
+      'Your AI mobile assistant',
 
     placeholder:
-    'Ask Nila anything...',
+      'Ask Nila anything...',
 
     empty:
-    'Please type a message.',
+      'Please type a message.',
 
     welcome:
-    'Hello! I am Nila. 😊\n\nHow can I help you?',
+      'Hello! I am Nila. 😊\n\nHow can I help you?',
 
     connection:
-    'AI connection error: ',
+      'AI connection error: ',
 
     voiceUnsupported:
-    'Voice input is not supported in this browser.',
+      'Voice input is not supported in this browser.',
 
     install:
-    'Use Add to Home Screen from the Chrome menu.'
+      'Install is not available yet. Use Add to Home Screen from the Chrome menu.'
   }
-
 };
 
 
 function addMessage(
   text,
-  who='bot'
-){
+  who = 'bot'
+) {
+  const msg =
+    document.createElement('div');
 
-  const msg=
-  document.createElement('div');
+  msg.className =
+    `msg ${who}`;
 
-  msg.className=
-  `msg ${who}`;
-
-  msg.textContent=
-  text;
+  msg.textContent =
+    text;
 
   document
-  .getElementById('chat')
-  .appendChild(msg);
+    .getElementById('chat')
+    .appendChild(msg);
 
   msg.scrollIntoView({
-    behavior:'smooth',
-    block:'end'
+    behavior: 'smooth',
+    block: 'end'
   });
-
 }
 
 
 function setLang(
   newLang
-){
-
-  lang=newLang;
-
-  document
-  .getElementById('tagline')
-  .textContent=
-  texts[lang].tagline;
+) {
+  lang = newLang;
 
   document
-  .getElementById('prompt')
-  .placeholder=
-  texts[lang].placeholder;
+    .getElementById('tagline')
+    .textContent =
+    texts[lang].tagline;
 
+  document
+    .getElementById('prompt')
+    .placeholder =
+    texts[lang].placeholder;
 }
 
 
-async function sendMessage(){
+async function sendMessage() {
+  const input =
+    document.getElementById(
+      'prompt'
+    );
 
-  const input=
-  document.getElementById('prompt');
+  const text =
+    input.value.trim();
 
-  const text=
-  input.value.trim();
-
-  if(!text){
-
+  if (!text) {
     alert(
       texts[lang].empty
     );
-
     return;
-
   }
 
   addMessage(
@@ -766,53 +794,56 @@ async function sendMessage(){
     'user'
   );
 
-  input.value='';
+  input.value = '';
 
-  const btn=
-  document.getElementById(
-    'sendBtn'
-  );
-
-  btn.disabled=true;
-
-  btn.textContent='...';
-
-  try{
-
-    const response=
-    await fetch(
-      CHAT_API,
-      {
-        method:'POST',
-
-        headers:{
-          'Content-Type':
-          'application/json'
-        },
-
-        body:
-        JSON.stringify({
-          message:text,
-          language:lang
-        })
-      }
+  const btn =
+    document.getElementById(
+      'sendBtn'
     );
 
-    const data=
-    await response.json();
+  btn.disabled =
+    true;
 
-    if(!response.ok){
+  btn.textContent =
+    '...';
 
+  try {
+    const response =
+      await fetch(
+        CHAT_API,
+        {
+          method:
+            'POST',
+
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+
+          body:
+            JSON.stringify({
+              message:
+                text,
+
+              language:
+                lang
+            })
+        }
+      );
+
+    const data =
+      await response.json();
+
+    if (!response.ok) {
       throw new Error(
         data.error ||
         'Request failed'
       );
-
     }
 
-    const reply=
-    data.reply ||
-    'No response returned.';
+    const reply =
+      data.reply ||
+      'No response returned.';
 
     addMessage(
       reply,
@@ -823,307 +854,320 @@ async function sendMessage(){
       reply
     );
 
-  }catch(error){
-
+  } catch (error) {
     addMessage(
-      texts[lang].connection+
+      texts[lang].connection +
       error.message,
       'bot'
     );
 
-  }finally{
+  } finally {
+    btn.disabled =
+      false;
 
-    btn.disabled=false;
-
-    btn.textContent='Send';
-
+    btn.textContent =
+      'Send';
   }
-
 }
 
 
-function toggleVoiceReply(){
+function toggleVoiceReply() {
+  voiceReplyEnabled =
+    !voiceReplyEnabled;
 
-  voiceReplyEnabled=
-  !voiceReplyEnabled;
+  const button =
+    document.getElementById(
+      'voiceReplyBtn'
+    );
 
-  const button=
-  document.getElementById(
-    'voiceReplyBtn'
-  );
+  button.textContent =
+    voiceReplyEnabled
+      ? '🔊 Reply ON'
+      : '🔇 Reply OFF';
 
-  button.textContent=
-  voiceReplyEnabled
-  ? '🔊 Reply ON'
-  : '🔇 Reply OFF';
-
-  if(
+  if (
     !voiceReplyEnabled &&
     'speechSynthesis' in window
-  ){
-
+  ) {
     window
-    .speechSynthesis
-    .cancel();
-
+      .speechSynthesis
+      .cancel();
   }
-
 }
 
 
 function speakReply(
   text
-){
-
-  if(!voiceReplyEnabled){
+) {
+  if (!voiceReplyEnabled) {
     return;
   }
 
-  if(
+  if (
     !('speechSynthesis' in window)
-  ){
+  ) {
     return;
   }
 
   window
-  .speechSynthesis
-  .cancel();
+    .speechSynthesis
+    .cancel();
 
-  const speech=
-  new SpeechSynthesisUtterance(
-    text
-  );
+  const speech =
+    new SpeechSynthesisUtterance(
+      text
+    );
 
-  speech.lang=
-  lang==='ta'
-  ? 'ta-IN'
-  : 'en-IN';
+  speech.lang =
+    lang === 'ta'
+      ? 'ta-IN'
+      : 'en-IN';
 
-  speech.rate=1;
+  speech.rate = 1;
+
+  const voices =
+    window
+      .speechSynthesis
+      .getVoices();
+
+  const matching =
+    voices.find(
+      function(v) {
+        const code =
+          (v.lang || '')
+            .toLowerCase();
+
+        if (lang === 'ta') {
+          return code.startsWith('ta');
+        }
+
+        return code.startsWith('en-in') || code.startsWith('en');
+      }
+    );
+
+  if (matching) {
+    speech.voice =
+      matching;
+  }
 
   window
-  .speechSynthesis
-  .speak(
-    speech
-  );
-
+    .speechSynthesis
+    .speak(
+      speech
+    );
 }
 
 
-function startVoice(){
+function startVoice() {
+  const Recognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
 
-  const Recognition=
-  window.SpeechRecognition ||
-  window.webkitSpeechRecognition;
-
-  if(!Recognition){
-
+  if (!Recognition) {
     alert(
       texts[lang]
-      .voiceUnsupported
+        .voiceUnsupported
     );
-
     return;
-
   }
 
-  const recognition=
-  new Recognition();
+  const recognition =
+    new Recognition();
 
-  recognition.lang=
-  lang==='ta'
-  ? 'ta-IN'
-  : 'en-IN';
+  recognition.lang =
+    lang === 'ta'
+      ? 'ta-IN'
+      : 'en-IN';
 
-  recognition.interimResults=false;
+  recognition.interimResults =
+    false;
 
-  recognition.maxAlternatives=1;
+  recognition.maxAlternatives =
+    1;
 
-  recognition.onresult=
-  function(event){
-
-    document
-    .getElementById(
-      'prompt'
-    )
-    .value=
-    event
-    .results[0][0]
-    .transcript;
-
-  };
+  recognition.onresult =
+    function(event) {
+      document
+        .getElementById(
+          'prompt'
+        )
+        .value =
+        event
+          .results[0][0]
+          .transcript;
+    };
 
   recognition.start();
-
 }
 
 
 function handleImage(
   event
-){
+) {
+  const file =
+    event.target.files[0];
 
-  const file=
-  event.target.files[0];
-
-  if(!file){
+  if (!file) {
     return;
   }
 
-  const reader=
-  new FileReader();
+  const reader =
+    new FileReader();
 
-  reader.onload=
-  function(e){
+  reader.onload =
+    function(e) {
+      selectedImageBase64 =
+        e.target.result;
 
-    selectedImageBase64=
-    e.target.result;
+      const preview =
+        document.getElementById(
+          'photoPreview'
+        );
 
-    const preview=
-    document.getElementById(
-      'photoPreview'
-    );
+      preview.src =
+        selectedImageBase64;
 
-    preview.src=
-    selectedImageBase64;
+      document
+        .getElementById(
+          'photoCard'
+        )
+        .classList
+        .remove('hidden');
 
-    document
-    .getElementById(
-      'photoCard'
-    )
-    .classList
-    .remove('hidden');
+      document
+        .getElementById(
+          'editedResult'
+        )
+        .classList
+        .add('hidden');
 
-    addMessage(
-      lang==='ta'
-      ? 'படம் upload ஆனது. Analyze செய்யலாம்.'
-      : 'Photo uploaded. You can analyze it.',
-      'bot'
-    );
-
-  };
+      addMessage(
+        lang === 'ta'
+          ? 'படம் upload ஆனது. இப்போது Analyze அல்லது Edit செய்யலாம்.'
+          : 'Photo uploaded. You can now analyze or edit it.',
+        'bot'
+      );
+    };
 
   reader.readAsDataURL(
     file
   );
-
 }
 
 
 function showImageTool(
   name,
   button
-){
+) {
+  document
+    .querySelectorAll(
+      '.imageTool'
+    )
+    .forEach(
+      function(el) {
+        el.classList
+          .add('hidden');
+      }
+    );
 
   document
-  .querySelectorAll(
-    '.imageTool'
-  )
-  .forEach(
-    function(el){
-
-      el.classList
-      .add('hidden');
-
-    }
-  );
+    .getElementById(
+      name + 'Tool'
+    )
+    .classList
+    .remove('hidden');
 
   document
-  .getElementById(
-    name+'Tool'
-  )
-  .classList
-  .remove('hidden');
+    .querySelectorAll(
+      '.tab'
+    )
+    .forEach(
+      function(el) {
+        el.classList
+          .remove('active');
+      }
+    );
 
-  document
-  .querySelectorAll(
-    '.tab'
-  )
-  .forEach(
-    function(el){
-
-      el.classList
-      .remove('active');
-
-    }
-  );
-
-  if(button){
-
+  if (button) {
     button.classList
-    .add('active');
-
+      .add('active');
   }
-
 }
 
 
-async function analyzePhoto(){
+function setImageStatus(
+  message
+) {
+  document
+    .getElementById(
+      'imageStatus'
+    )
+    .textContent =
+    message;
+}
 
-  if(!selectedImageBase64){
 
+async function analyzePhoto() {
+  if (!selectedImageBase64) {
     alert(
       'முதலில் photo upload செய்யுங்கள்.'
     );
-
     return;
-
   }
 
-  const question=
-  document
-  .getElementById(
-    'analyzePrompt'
-  )
-  .value
-  .trim() ||
-  'Describe this image and explain anything important you see.';
+  const question =
+    document
+      .getElementById(
+        'analyzePrompt'
+      )
+      .value
+      .trim() ||
+    'Describe this image and explain anything important you see.';
 
   setImageStatus(
     'Photo analyze ஆகிறது...'
   );
 
-  try{
+  try {
+    const response =
+      await fetch(
+        ANALYZE_API,
+        {
+          method:
+            'POST',
 
-    const response=
-    await fetch(
-      ANALYZE_API,
-      {
-        method:'POST',
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
 
-        headers:{
-          'Content-Type':
-          'application/json'
-        },
+          body:
+            JSON.stringify({
+              image:
+                selectedImageBase64,
 
-        body:
-        JSON.stringify({
-          image:
-          selectedImageBase64,
+              prompt:
+                question,
 
-          prompt:
-          question,
+              language:
+                lang
+            })
+        }
+      );
 
-          language:
-          lang
-        })
-      }
-    );
+    const data =
+      await response.json();
 
-    const data=
-    await response.json();
-
-    if(!response.ok){
-
+    if (!response.ok) {
       throw new Error(
         data.error ||
         'Photo analysis failed'
       );
-
     }
 
-    const reply=
-    data.reply ||
-    'No analysis returned.';
+    const reply =
+      data.reply ||
+      'No analysis returned.';
 
     addMessage(
       reply,
@@ -1138,267 +1182,35 @@ async function analyzePhoto(){
       'Analysis complete ✅'
     );
 
-  }catch(error){
-
+  } catch (error) {
     setImageStatus(
-      'Error: '+
+      'Error: ' +
       error.message
     );
+  }
+}
 
+
+async function generateImage() {
+  const prompt =
+    document
+      .getElementById(
+        'generatePrompt'
+      )
+      .value
+      .trim();
+
+  if (!prompt) {
+    alert(
+      'Image prompt type செய்யுங்கள்.'
+    );
+    return;
   }
 
-}
-
-
-function showPreparedEdit(
-  instruction
-){
-
-  const editBox=
-  document.getElementById(
-    'editPrompt'
-  );
-
-  editBox.value=
-  instruction.trim();
-
-  const editButton=
-  document.querySelector(
-    'button[onclick*="showImageTool(\'edit\'"]'
-  );
-
-  showImageTool(
-    'edit',
-    editButton
-  );
-
-  setImageStatus(
-    'Edit instruction ready ✅'
-  );
-
-  editBox.scrollIntoView({
-    behavior:'smooth',
-    block:'center'
-  });
-
-}
-
-
-function editPhotoCustom(){
-
-  const instruction=
-  document
-  .getElementById(
-    'editPrompt'
-  )
-  .value
-  .trim();
-
-  if(!instruction){
-
-    alert(
-      'என்ன edit செய்ய வேண்டும் என்று type செய்யுங்கள்.'
+  const status =
+    document.getElementById(
+      'generateStatus'
     );
 
-    return;
-
-  }
-
-  setImageStatus(
-    'Edit instruction ready ✅'
-  );
-
-}
-
-
-function changeDress(){
-
-  const type=
-  document
-  .getElementById(
-    'dressType'
-  )
-  .value;
-
-  const color=
-  document
-  .getElementById(
-    'dressColor'
-  )
-  .value;
-
-  const style=
-  document
-  .getElementById(
-    'dressStyle'
-  )
-  .value
-  .trim() ||
-  'natural';
-
-  const instruction=`
-Keep the uploaded photo unchanged except for clothing.
-
-Keep:
-- same person
-- same face
-- same hairstyle
-- same pose
-- same body position
-- same background
-
-Change clothing to:
-${color} ${type}
-
-Style:
-${style}
-
-Keep the result realistic,
-natural and clean.
-`;
-
-  showPreparedEdit(
-    instruction
-  );
-
-}
-
-
-function changeBackground(){
-
-  const background=
-  document
-  .getElementById(
-    'backgroundPrompt'
-  )
-  .value
-  .trim();
-
-  if(!background){
-
-    alert(
-      'Background type செய்யுங்கள்.'
-    );
-
-    return;
-
-  }
-
-  const instruction=`
-Keep the same person,
-face,
-clothing,
-hairstyle and pose.
-
-Change only the background.
-
-New background:
-${background}
-
-Match the lighting,
-shadows and perspective naturally.
-`;
-
-  showPreparedEdit(
-    instruction
-  );
-
-}
-
-
-function changeHair(){
-
-  const hair=
-  document
-  .getElementById(
-    'hairStyle'
-  )
-  .value;
-
-  const instruction=`
-Keep the same person,
-face,
-clothing,
-pose and background.
-
-Change only the hairstyle.
-
-New hairstyle:
-${hair}
-
-Keep the hair realistic
-and naturally matched to the face.
-`;
-
-  showPreparedEdit(
-    instruction
-  );
-
-}
-
-
-function setImageStatus(
-  message
-){
-
-  document
-  .getElementById(
-    'imageStatus'
-  )
-  .textContent=
-  message;
-
-}
-
-
-window.addEventListener(
-  'beforeinstallprompt',
-  function(event){
-
-    event.preventDefault();
-
-    deferredPrompt=
-    event;
-
-  }
-);
-
-
-async function installPromptHandler(){
-
-  if(!deferredPrompt){
-
-    alert(
-      texts[lang].install
-    );
-
-    return;
-
-  }
-
-  deferredPrompt.prompt();
-
-  await deferredPrompt
-  .userChoice;
-
-  deferredPrompt=null;
-
-}
-
-
-document
-.getElementById(
-  'prompt'
-)
-.addEventListener(
-  'keydown',
-  function(event){
-
-    if(
-      event.key==='Enter' &&
-      !event.shiftKey
-    ){
-
-      event.preventDefault();
-
-      s
+  const image =
+    document.
